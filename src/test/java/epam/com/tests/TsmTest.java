@@ -1,6 +1,5 @@
 package epam.com.tests;
 
-import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,7 +16,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class TsmTest {
 
-   @Test
+   @Test(enabled = false)
     public void testSuperHomePage(){
        WebDriver driver = new FirefoxDriver();
        driver.get("https://www.travelsupermarket.com/");
@@ -45,7 +44,7 @@ public class TsmTest {
        driver.quit();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testFlightsSearch() throws InterruptedException {
         WebDriver driver = new FirefoxDriver();
         driver.get("https://www.travelsupermarket.com/");

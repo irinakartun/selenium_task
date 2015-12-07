@@ -1,0 +1,9 @@
+<suite name="Selenium POM" parallel="tests">
+
+    <test name="Travelsupermarket tests">
+        <classes>
+                <class name="epam.com.tests.TsmPomTests" />
+        </classes>
+    </test>
+
+</suite>
