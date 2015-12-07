@@ -1,5 +1,6 @@
 package epam.com.tests;
 
+import org.junit.Ignore;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +23,7 @@ public class TsmTest {
        driver.get("https://www.travelsupermarket.com/");
        WebElement logo = driver.findElement(By.xpath("//div[@class='site-logo']"));
        WebElement menu = driver.findElement(By.id("navigation-screen-toggle-area"));
-       WebElement hero = driver.findElement(By.xpath("//h1[contains(., 'Welcome to our new home')]"));
+       WebElement hero = driver.findElement(By.id("hero"));
        WebElement searchGadget = driver.findElement(By.tagName("search-gadget"));
        WebElement holidaysTab = driver.findElement(By.xpath("//button[@class='searchGadgetForm__channelOption ng-binding searchGadgetForm__channelOption--current'][contains(., 'Holidays')]"));
        WebElement flightsTab = driver.findElement(By.xpath("//button[contains(., 'Flights')]"));
@@ -32,7 +33,7 @@ public class TsmTest {
 
        assertTrue(logo.isDisplayed());
        assertTrue(menu.isDisplayed());
-       assertTrue(hero.isDisplayed());
+       assertTrue(hero.getText().contains("Welcome to our new home"));
        assertTrue(searchGadget.isDisplayed());
        assertTrue(holidaysTab.isDisplayed());
        assertTrue(flightsTab.isDisplayed());
@@ -52,6 +53,9 @@ public class TsmTest {
 
         String from = "LAX";
         String to = "LHR";
+        String dateFrom = "23 Dec 15";
+        String dateTo = "31 Dec 15";
+        String adults = "1";
 
         WebElement flightsTab = driver.findElement(By.xpath("//button[contains(., 'Flights')]"));
         flightsTab.click();
@@ -69,15 +73,15 @@ public class TsmTest {
 
         WebElement departCalendar = driver.findElement(By.id("departureDate"));
         departCalendar.click();
-        WebElement departDate = driver.findElement(By.xpath("//table[@id='departureDate_table']//div[@aria-label='23 Dec 15']"));
+        WebElement departDate = driver.findElement(By.xpath("//table[@id='departureDate_table']//div[@aria-label='" + dateFrom +"']"));
         departDate.click();
 
         WebElement returnCalendar = driver.findElement(By.id("returnDate"));
         returnCalendar.click();
-        WebElement returnDate = driver.findElement(By.xpath("//table[@id='returnDate_table']//div[@aria-label='31 Dec 15']"));
+        WebElement returnDate = driver.findElement(By.xpath("//table[@id='returnDate_table']//div[@aria-label='" + dateTo + "']"));
         returnDate.click();
 
-        WebElement adultsOptions = driver.findElement(By.xpath("//select[@id='flightsAdults']/option[contains(text(), '1')]"));
+        WebElement adultsOptions = driver.findElement(By.xpath("//select[@id='flightsAdults']/option[contains(text(), '" + adults + "')]"));
         adultsOptions.click();
 
         WebElement directFlights = driver.findElement(By.xpath("//label[contains(text(), 'Direct flights only')]"));
