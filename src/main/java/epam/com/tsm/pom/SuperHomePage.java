@@ -35,7 +35,7 @@ public class SuperHomePage extends AbstractPage{
     @FindBy(id = "navigation-screen-toggle-area")
     private WebElement menu;
 
-    @FindBy(xpath = "//h1[contains(., 'Welcome to our new home')]")
+    @FindBy(id = "hero")
     private WebElement hero;
 
     @FindBy(tagName = "search-gadget")
@@ -107,7 +107,7 @@ public class SuperHomePage extends AbstractPage{
     }
 
     public boolean isHeroPresented(){
-        return hero.isDisplayed();
+        return hero.getText().contains("Welcome to our new home");
     }
 
     public boolean isSearchGadgetPresented(){
