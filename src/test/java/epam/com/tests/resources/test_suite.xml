@@ -1,0 +1,9 @@
+<suite name="Selenium task number one" parallel="tests">
+
+    <test name="Travelsupermarket tests task1">
+        <classes>
+                <class name="epam.com.tests.TsmTest" />
+        </classes>
+    </test>
+
+</suite>
