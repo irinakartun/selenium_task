@@ -1,8 +1,9 @@
-<suite name="Selenium POM" parallel="tests">
+<suite name="Selenium POM" verbose="2" parallel="classes" thread-count="2">
 
     <test name="Travelsupermarket tests">
-        <classes>
-                <class name="epam.com.tests.TsmPomTests" />
+         <classes>
+                <class name="epam.com.tests.TsmPomTests"/>
+                <class name="epam.com.tests.TsmActionsJSTest"/>
         </classes>
     </test>
 

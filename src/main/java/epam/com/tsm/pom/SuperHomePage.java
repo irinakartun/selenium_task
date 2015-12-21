@@ -1,8 +1,10 @@
 package epam.com.tsm.pom;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.awt.*;
 import java.security.Key;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.fail;
 
@@ -134,43 +137,63 @@ public class SuperHomePage extends AbstractPage{
         return insuranceTab.isDisplayed();
     }
 
-    public SuperHomePage goToFlightsTab(){
+    public void goToFlightsTab(){
         flightsTab.click();
-        return this;
     }
 
-    public SuperHomePage setFromAirport(String from, String airportAbbr){
+    public void setFromAirport(String from, String airportAbbr) {
         flyingFrom.sendKeys(from);
         wait.until(ExpectedConditions.visibilityOf(autocompleteFrom));
+        boolean found = false;
         for (int i = 0; i < airportsFrom.size(); i++) {
             airportsFrom.get(i).sendKeys(Keys.DOWN);
-            if (airportsFrom.get(i).getAttribute("focus-on").equals(airportAbbr)){
+            if (airportsFrom.get(i).getAttribute("focus-on").equals(airportAbbr)) {
                 airportsFrom.get(i).click();
-                return this;
+                found = true;
             }
         }
-        fail("Specified airport was not found!");
-        return this;
+        if (found) {
+            return;
+        }
+        else {
+            fail("Specified airport was not found!");
+        }
     }
 
-    public SuperHomePage setToAirport(String to, String airportAbbr){
+    public void typeFromAirport(String fromAirport){
+        flyingFrom.click();
+        Actions builder = new Actions(driver);
+        builder.sendKeys(fromAirport).build().perform();
+    }
+
+    public void typeToAirport(String toAirport){
+        flyingTo.click();
+        Actions builder = new Actions(driver);
+        builder.sendKeys(toAirport).build().perform();
+    }
+
+    public void setToAirport(String to, String airportAbbr){
         flyingTo.sendKeys(to);
         wait.until(ExpectedConditions.visibilityOf(autocompleteTo));
+        boolean found = false;
         for (int i = 0; i < airportsTo.size(); i++) {
             airportsTo.get(i).sendKeys(Keys.DOWN);
             if (airportsTo.get(i).getAttribute("focus-on").equals(airportAbbr)){
                 airportsTo.get(i).click();
-                return this;
+                found = true;
             }
         }
-        fail("Specified airport was not found!");
-        return this;
+        if (found) {
+            return;
+        }
+        else {
+            fail("Specified airport was not found!");
+        }
     }
 
-    public SuperHomePage setFromDate(String dateFrom){
+    public void setFromDate(String dateFrom) {
         departCalendar.click();
         findDate(departDates, dateFrom);
-        return this;
     }
 
     private void findDate(List<WebElement> calendar, String date){
@@ -189,25 +212,37 @@ public class SuperHomePage extends AbstractPage{
         }
     }
 
-    public SuperHomePage setToDate(String dateTo){
+    public void setToDate(String dateTo) {
         returnCalendar.click();
         findDate(returnDates, dateTo);
-        return this;
     }
 
-    public SuperHomePage selectAdults(String quantity){
+    public void execJSFromDate(String dateFrom) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementById('departureDate_root').setAttribute('aria-hidden', 'false');");
+        js.executeScript("document.getElementById('departureDate_root').setAttribute('class', 'picker picker--opened picker--focused');");
+        findDate(departDates, dateFrom);
+    }
+
+    public void execJSToDate(String dateTo) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementById('returnDate_root').setAttribute('aria-hidden', 'false');");
+        js.executeScript("document.getElementById('returnDate_root').setAttribute('class', 'picker picker--opened picker--focused');");
+        findDate(returnDates, dateTo);
+    }
+
+    public void selectAdults(String quantity){
         new Select(adults).selectByValue(quantity);
-        return this;
     }
 
-    public SuperHomePage checkDirectOnly(){
+    public void checkDirectOnly(){
         directFlights.click();
-        return this;
     }
 
     public ResultPage clickSearch(){
         searchBtn.click();
         return PageFactory.initElements(driver, ResultPage.class);
     }
+
 
 }

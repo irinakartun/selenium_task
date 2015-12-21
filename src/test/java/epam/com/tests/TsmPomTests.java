@@ -9,23 +9,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.text.ParseException;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /**
  * Created by Irina_Kartun on 12/5/2015.
  */
-public class TsmPomTests {
+public class TsmPomTests extends BasicTest {
 
-    WebDriver driver;
 
-    @BeforeMethod(description = "driver setup")
-    public void setUp(){
-        driver = new FirefoxDriver();
-        driver.get(SuperHomePage.SHP_URL);
-    }
-
-    @Test(description = "verify superHomePage")
+    @Test(description = "verify superHomePage", enabled = true)
     public void testSuperhomepage(){
         SuperHomePage shp = new SuperHomePage(driver);
         assertTrue(shp.isLogoPresented());
@@ -39,8 +34,8 @@ public class TsmPomTests {
         assertTrue(shp.isInsuranceTabPresented());
     }
 
-    @Test(description = "verify flight search")
-    public void testFlightSearch(){
+    @Test(description = "verify flight search", enabled = true)
+    public void testFlightSearch() {
         SuperHomePage shp = new SuperHomePage(driver);
         shp.goToFlightsTab();
         shp.setFromAirport("los angeles", "LAX");
@@ -54,10 +49,6 @@ public class TsmPomTests {
         assertEquals(result.verifyHeader(), "LAX to FCO");
     }
 
-    @AfterMethod(description = "driver cleanup")
-    public void cleanUp(){
-        driver.close();
-        driver.quit();
-    }
+
 
 }
