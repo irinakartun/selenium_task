@@ -1,22 +1,16 @@
 package epam.com.tsm.pom;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
+import epam.com.tsm.businessObjects.Calendar;
+import epam.com.tsm.controls.CheckBox;
+import epam.com.tsm.controls.DropdownList;
+import epam.com.tsm.controls.EditField;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.awt.*;
-import java.security.Key;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static com.thoughtworks.selenium.SeleneseTestBase.fail;
 
 /**
  * Created by Irina_Kartun on 12/5/2015.
@@ -137,6 +131,66 @@ public class SuperHomePage extends AbstractPage{
         return insuranceTab.isDisplayed();
     }
 
+
+
+    public ResultPage searchFlights(String airportFrom, String abbrFrom, String airportTo, String abbrTo, String departDate, String returnDate, boolean direct, String adultsAmount){
+        flightsTab.click();
+        EditField from = new EditField(flyingFrom, autocompleteFrom, airportsFrom);
+        from.selectAutocompleteValue(driver, airportFrom, abbrFrom);
+        EditField to = new EditField(flyingTo, autocompleteTo, airportsTo);
+        to.selectAutocompleteValue(driver, airportTo, abbrTo);
+        Calendar fromDate = new Calendar(departCalendar, departDates, nextMonth);
+        fromDate.selectDate(departDate);
+        Calendar toDate = new Calendar(returnCalendar, returnDates, nextMonth);
+        toDate.selectDate(returnDate);
+        DropdownList adultsList = new DropdownList(adults);
+        adultsList.selectDropdownValue(adultsAmount);
+        CheckBox directFlight = new CheckBox(directFlights);
+        directFlight.check(direct);
+        searchBtn.click();
+        return PageFactory.initElements(driver, ResultPage.class);
+    }
+
+/*
+    public ResultPage searchFlights(String airportNameFrom, String airportAbbrFrom, String airportNameTo, String airportAbbrTo,
+                                    String dateFrom, String dateTo,
+                                    String quantity,
+                                    Boolean set){
+        FlightsSearch flightsGadget = new FlightsSearch(flightsTab, searchBtn);
+        flightsGadget.setAirportFrom(flyingFrom);
+        flightsGadget.setAirportsListFrom(airportsFrom);
+        flightsGadget.setAutocompleteFrom(autocompleteFrom);
+        flightsGadget.setAirportTo(flyingTo);
+        flightsGadget.setAirportsListTo(airportsTo);
+        flightsGadget.setAutocompleteTo(autocompleteTo);
+        flightsGadget.setDepartCalendar(departCalendar);
+        flightsGadget.setDepartDates(departDates);
+        flightsGadget.setReturnCalendar(returnCalendar);
+        flightsGadget.setReturnDates(returnDates);
+        flightsGadget.setNextMonth(nextMonth);
+        flightsGadget.setAdult(adults);
+        flightsGadget.setDirectOnly(directFlights);
+        flightsGadget.doSearch(airportNameFrom, airportAbbrFrom, airportNameTo, airportAbbrTo,
+                                dateFrom, dateTo,
+                                quantity,
+                                set);
+        return PageFactory.initElements(driver, ResultPage.class);
+    }
+
+
+    public ResultPage doFlightsSearch(String airportFrom, String airportAbbrFrom, String airportTo, String airportAbbrTo,
+                                      String dateFrom, String dateTo,
+                                      String quantity,
+                                      boolean direct){
+
+        SearchGadget flightSearch = new FlightsSearch("", airportFrom, airportTo, dateFrom, dateTo, quantity, direct)
+
+    }
+
+
+
+
+
     public void goToFlightsTab(){
         flightsTab.click();
     }
@@ -244,5 +298,5 @@ public class SuperHomePage extends AbstractPage{
         return PageFactory.initElements(driver, ResultPage.class);
     }
 
-
+*/
 }

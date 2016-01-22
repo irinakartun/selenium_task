@@ -15,13 +15,14 @@ import java.net.URL;
  */
 public class BasicTest {
 
-    DesiredCapabilities capability = DesiredCapabilities.firefox();
+//    DesiredCapabilities capability = DesiredCapabilities.firefox();
 
     WebDriver driver;
 
     @BeforeMethod(description = "driver setup")
     public void setUp() throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
+//        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
+        driver = new FirefoxDriver();
         driver.get(SuperHomePage.SHP_URL);
     }
 

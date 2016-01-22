@@ -1,20 +1,14 @@
 package epam.com.tsm.pom;
 
-import org.openqa.selenium.By;
+import epam.com.tsm.businessObjects.CostFilter;
+import epam.com.tsm.businessObjects.DragDropFilter;
+import epam.com.tsm.controls.Wait;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.List;
-import java.util.Locale;
-
-import static com.thoughtworks.selenium.SeleneseTestBase.fail;
 
 /**
  * Created by Irina_Kartun on 12/5/2015.
@@ -52,8 +46,8 @@ public class ResultPage extends AbstractPage {
 
 
     public void waitResultsUploaded(){
-        WebDriverWait wait = new WebDriverWait(driver, 3000);
-        wait.until(ExpectedConditions.visibilityOf(uploadedResults));
+        Wait waitResults = new Wait(driver, uploadedResults);
+        waitResults.waitElementIsPresent();
     }
 
     public String verifyHeader(){
@@ -61,6 +55,14 @@ public class ResultPage extends AbstractPage {
         return header.getText();
     }
 
+    public void filterByCost(int lowValue, int highValue) throws ParseException {
+        DragDropFilter filter = new CostFilter(driver, costLeftFilter, costRightFilter, costLowValue, costHighValue, nextPage);
+        filter.setFilter(lowValue, highValue);
+        filter.verifyFilter();
+    }
+
+
+/*
     public void changeCostFilter(int xLeft, int xRight){
  //       if (resetFilter.isDisplayed()){
  //           resetFilter.click();
@@ -99,7 +101,7 @@ public class ResultPage extends AbstractPage {
         }
 
     }
-
+*/
     public void highlightElements(WebElement elementToHighlight) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].style.border='5px groove red'", elementToHighlight);

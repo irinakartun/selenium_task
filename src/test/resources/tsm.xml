@@ -2,8 +2,7 @@
 
     <test name="Travelsupermarket tests">
          <classes>
-                <class name="epam.com.tests.TsmPomTests"/>
-                <class name="epam.com.tests.TsmActionsJSTest"/>
+                <class name="epam.com.tests.NewTest"/>
         </classes>
     </test>
 

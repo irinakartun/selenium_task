@@ -2,11 +2,6 @@ package epam.com.tests;
 
 import epam.com.tsm.pom.ResultPage;
 import epam.com.tsm.pom.SuperHomePage;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.text.ParseException;
@@ -17,7 +12,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by Irina_Kartun on 12/5/2015.
  */
-public class TsmPomTests extends BasicTest {
+public class NewTest extends BasicTest {
 
 
     @Test(description = "verify superHomePage", enabled = false)
@@ -33,22 +28,16 @@ public class TsmPomTests extends BasicTest {
         assertTrue(shp.isCarHireTabPresented());
         assertTrue(shp.isInsuranceTabPresented());
     }
-/*
-    @Test(description = "verify flight search", enabled = false)
-    public void testFlightSearch() {
+
+    @Test(description = "verify flight search", enabled = true)
+    public void testFlightSearch() throws ParseException {
         SuperHomePage shp = new SuperHomePage(driver);
-        shp.goToFlightsTab();
-        shp.setFromAirport("los angeles", "LAX");
-        shp.setToAirport("rome", "FCO");
-        shp.setFromDate("23 Dec 15");
-        shp.setToDate("31 Dec 15");
-        shp.checkDirectOnly();
-        shp.selectAdults("1");
-        ResultPage result = shp.clickSearch();
+        ResultPage result = shp.searchFlights("los angeles", "LAX", "rome", "FCO", "19 Feb 16", "25 Feb 16", false, "1");
         result.waitResultsUploaded();
         assertEquals(result.verifyHeader(), "LAX to FCO");
+        result.filterByCost(50, -100);
     }
-*/
+
 
 
 }
