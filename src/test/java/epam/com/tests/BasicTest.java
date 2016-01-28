@@ -1,6 +1,7 @@
 package epam.com.tests;
 
 import epam.com.tsm.pom.SuperHomePage;
+import epam.com.tsm.webdriver.WebDriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -20,16 +21,18 @@ public class BasicTest {
     WebDriver driver;
 
     @BeforeMethod(description = "driver setup")
-    public void setUp() throws MalformedURLException {
+    public void setUp()  {
 //        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
-        driver = new FirefoxDriver();
+//        driver = new FirefoxDriver();
+        driver = WebDriverSingleton.getWebDriverInstance();
         driver.get(SuperHomePage.SHP_URL);
     }
 
     @AfterMethod(description = "driver cleanup")
     public void cleanUp(){
-        driver.close();
-        driver.quit();
+//        driver.close();
+//        driver.quit();
+        WebDriverSingleton.closeWebDriver();
     }
 
 }

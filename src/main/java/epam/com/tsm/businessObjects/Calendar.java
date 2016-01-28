@@ -1,5 +1,12 @@
 package epam.com.tsm.businessObjects;
 
+import com.thoughtworks.selenium.SeleneseTestBase;
+import epam.com.tsm.controls.Button;
+import epam.com.tsm.controls.EditBox;
+import epam.com.tsm.ui.Locator;
+import epam.com.tsm.ui.LocatorType;
+import epam.com.tsm.ui.UIElement;
+import epam.com.tsm.webdriver.WebDriverSingleton;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -11,34 +18,32 @@ import static com.thoughtworks.selenium.SeleneseTestBase.fail;
  */
 public class Calendar {
 
-    private WebElement calendar;
-    private List<WebElement> calendarDates;
-    private WebElement nextLink;
+    private EditBox calendar;
 
-    public Calendar(WebElement calendar, List<WebElement> calendarDates, WebElement nextLink){
+    public Calendar(EditBox calendar){
         this.calendar = calendar;
-        this.calendarDates = calendarDates;
-        this.nextLink = nextLink;
     }
 
-    public void selectDate(String date){
+    public void selectDate(String date, String type){
         calendar.click();
-        findDate(date);
+        findDate(date, type);
     }
 
-    private void findDate(String date){
-        for (int i = 0; i < calendarDates.size(); i++) {
-            if (calendarDates.get(i).getAttribute("aria-label").equals(date)){
-                calendarDates.get(i).click();
+    private void findDate(String date, String type){            //type can be departure or return
+        UIElement calendarDates = new UIElement(new Locator(LocatorType.XPATH, "//table[@id='" + type + "Date_table']/tbody//div"));
+        Button next = new Button(new Locator(LocatorType.XPATH, "//div[@id='departureDate_root']//div[@title='Next month']"));
+        for (int i = 0; i < calendarDates.getList().size(); i++) {
+            if (calendarDates.getList().get(i).getAttribute("aria-label").equals(date)){
+                calendarDates.getList().get(i).click();
                 return;
             }
         }
-        if (nextLink.getAttribute("class").equals("picker__nav--next picker__nav--disabled")){
-            fail("You can't book the ticket for specified date!");
+        if (next.getAttribute("class").equals("picker__nav--next picker__nav--disabled")){
+            fail("You can't select specified date!");
         }
         else{
-            nextLink.click();
-            findDate(date);
+            next.click();
+            findDate(date, type);
         }
     }
 

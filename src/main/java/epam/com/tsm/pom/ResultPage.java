@@ -1,14 +1,22 @@
 package epam.com.tsm.pom;
 
-import epam.com.tsm.businessObjects.CostFilter;
-import epam.com.tsm.businessObjects.DragDropFilter;
-import epam.com.tsm.controls.Wait;
-import org.openqa.selenium.JavascriptExecutor;
+import epam.com.tsm.businessObjects.AirlinesFilter;
+import epam.com.tsm.businessObjects.SliderFilter;
+import epam.com.tsm.businessObjects.Filter;
+import epam.com.tsm.controls.Button;
+import epam.com.tsm.controls.CheckBox;
+import epam.com.tsm.controls.TextLabel;
+import epam.com.tsm.ui.Locator;
+import epam.com.tsm.ui.LocatorType;
+import epam.com.tsm.ui.UIElement;
+import epam.com.tsm.webdriver.WebDriverSingleton;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Locale;
+
+import static com.thoughtworks.selenium.SeleneseTestBase.fail;
 
 /**
  * Created by Irina_Kartun on 12/5/2015.
@@ -19,57 +27,40 @@ public class ResultPage extends AbstractPage {
         super(driver);
     }
 
-    @FindBy(xpath = "//div[@class='results-summary results-summary--complete']")
-    private WebElement uploadedResults;
-
-    @FindBy(xpath = "//div[@class='results-list-wrapper']//h1")
-    private WebElement header;
-
-    @FindBy(xpath = ".//*[@tracking-label='Cost']//*[@class='noUi-handle noUi-handle-lower']")
-    private WebElement costLeftFilter;
-
-    @FindBy(xpath = ".//*[@tracking-label='Cost']//*[@class='noUi-handle noUi-handle-upper']")
-    private WebElement costRightFilter;
-
-    @FindBy(xpath = ".//*[@tracking-label='Cost']//*[@class='filter-slider__value filter-slider__value--low ng-binding']")
-    private WebElement costLowValue;
-
-    @FindBy(xpath = ".//*[@tracking-label='Cost']//*[@class='filter-slider__value filter-slider__value--high ng-binding']")
-    private WebElement costHighValue;
-
-    @FindBy(linkText = "Reset filters")
-    private WebElement resetFilter;
-
-    @FindBy(xpath = "//*[@role='navigation']//button[contains(., 'Next')]")
-    private WebElement nextPage;
-
+    public UIElement uploadedResults = new UIElement(new Locator(LocatorType.XPATH, "//div[@class='results-summary results-summary--complete']"));
+    public TextLabel header = new TextLabel(new Locator(LocatorType.XPATH, "//div[@class='results-list-wrapper']//h1"));
+    public TextLabel airlinesTab = new TextLabel(new Locator(LocatorType.LINKTEXT, "Airlines"));
+    public TextLabel costTab = new TextLabel(new Locator(LocatorType.LINKTEXT, "Cost"));
+    public TextLabel airlinesFilter = new TextLabel(new Locator(LocatorType.ID, "airlines"));
+    public TextLabel costFilter = new TextLabel(new Locator(LocatorType.XPATH, "//*[@tracking-label='Cost']"));
+    public UIElement costLowValue = new UIElement(new Locator(LocatorType.XPATH, ".//*[@tracking-label='Cost']//*[@class='filter-slider__value filter-slider__value--low ng-binding']"));
+    public UIElement costHighValue = new UIElement(new Locator(LocatorType.XPATH, ".//*[@tracking-label='Cost']//*[@class='filter-slider__value filter-slider__value--high ng-binding']"));
+    public Button nextPage = new Button(new Locator(LocatorType.XPATH, "//*[@role='navigation']//button[contains(., 'Next')]"));
 
 
     public void waitResultsUploaded(){
-        Wait waitResults = new Wait(driver, uploadedResults);
-        waitResults.waitElementIsPresent();
+        WebDriverSingleton.waitElementIsPresented(uploadedResults);
     }
 
     public String verifyHeader(){
-        highlightElements(header);
         return header.getText();
     }
 
-    public void filterByCost(int lowValue, int highValue) throws ParseException {
-        DragDropFilter filter = new CostFilter(driver, costLeftFilter, costRightFilter, costLowValue, costHighValue, nextPage);
-        filter.setFilter(lowValue, highValue);
-        filter.verifyFilter();
+    public void setSliderFilter(String type, int xLeft, int xRight){
+        if (!costFilter.isDisplayed()){
+            costTab.click();
+        }
+        Filter costFilter = new SliderFilter(type, xLeft, 0, xRight, 0);
+        costFilter.setFilter();
     }
 
-
-/*
-    public void changeCostFilter(int xLeft, int xRight){
- //       if (resetFilter.isDisplayed()){
- //           resetFilter.click();
- //       }
-        Actions builder = new Actions(driver);
-        builder.dragAndDropBy(costLeftFilter, xLeft, 0).build().perform();
-        builder.dragAndDropBy(costRightFilter, xRight, 0).build().perform();
+    public void setFilterByAirlines(String airlineName){
+        if (!airlinesFilter.isDisplayed()){
+            airlinesTab.click();
+        }
+        CheckBox airline = new CheckBox(new Locator(LocatorType.XPATH, "//*[@id='airlines']//span[contains(., '" + airlineName + "')]"));
+        Filter airlinesFilter = new AirlinesFilter(airline);
+        airlinesFilter.setFilter();
     }
 
     private float parseCurrencyToNumber(String currencyString) throws ParseException {
@@ -78,38 +69,30 @@ public class ResultPage extends AbstractPage {
         return number.floatValue();
     }
 
-    public void verifyFilterByCost() throws ParseException {
-
+    public void verifyFilterResults(String airlineName) throws ParseException {
         float lowCost = parseCurrencyToNumber(costLowValue.getText().trim());
         float highCost = parseCurrencyToNumber(costHighValue.getText().replace(" - ", "").trim());
-        List<WebElement> pricesList = driver.findElements(By.xpath("//*[@class='ng-scope ng-isolate-scope']//*[@class='card__price']"));
+        TextLabel prices = new TextLabel(new Locator(LocatorType.XPATH, "//*[@class='ng-scope ng-isolate-scope']//*[@class='card__price']"));
+        TextLabel outboundAirline = new TextLabel(new Locator(LocatorType.XPATH, "//*[@details='card.outboundFlight']//h3/span[contains(., '" + airlineName + "')]"));
+        TextLabel inboundAirline = new TextLabel(new Locator(LocatorType.XPATH, "//*[@details='card.inboundFlight']//h3/span[contains(., '" + airlineName + "')]"));
 
-        for (int i = 0; i < pricesList.size(); i++) {
-            if ( (parseCurrencyToNumber(pricesList.get(i).getText().trim()) >= lowCost) && (parseCurrencyToNumber(pricesList.get(i).getText().trim()) <= highCost) ){
+        for (int i = 0; i < prices.getList().size(); i++) {
+            if ( (parseCurrencyToNumber(prices.getList().get(i).getText().trim()) >= lowCost) && (parseCurrencyToNumber(prices.getList().get(i).getText().trim()) <= highCost)
+                    && outboundAirline.getList().get(i).getText().contains(airlineName) && inboundAirline.getList().get(i).getText().contains(airlineName) ){
                 continue;
             }
             else {
-                fail("Cost filter does not work correct!");
+                fail("Filter does not work correct!");
             }
         }
         if (nextPage.isDisplayed()){
             nextPage.click();
-            verifyFilterByCost();
+            verifyFilterResults(airlineName);
         }
         else{
             return;
         }
-
     }
-*/
-    public void highlightElements(WebElement elementToHighlight) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].style.border='5px groove red'", elementToHighlight);
-        takeScreenshot(driver);
-    }
-
-
-
 
 
 }
