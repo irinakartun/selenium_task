@@ -1,6 +1,7 @@
 package epam.com.tsm.ui;
 
-import epam.com.tsm.webdriver.WebDriverSingleton;
+import epam.com.tsm.logger.Logging;
+import epam.com.tsm.webdriver.WebdriverSingleton;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
@@ -24,83 +25,194 @@ public class UIElement {
         return locator;
     }
 
-
     public void click() {
-        WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).click();
+        try {
+            WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).click();
+            Logging.getLogger().debug("Clicked on the element with locator: " + this.getLocator().getValue());
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+        }
     }
 
 
     public void submit() {
-        this.submit();
+        try {
+            this.submit();
+            Logging.getLogger().debug("Submitted element with locator: " + this.getLocator().getValue());
+
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+        }
     }
 
 
     public void sendKeys(CharSequence... keysToSend) {
-        WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).sendKeys(keysToSend);
+        try {
+            WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).sendKeys(keysToSend);
+            Logging.getLogger().debug("Sent keys to the element with locator: " + this.getLocator().getValue());
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+        }
     }
 
 
     public void clear() {
-        WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).clear();
+        try {
+            WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).clear();
+            Logging.getLogger().debug("Cleared element with locator: " + this.getLocator().getValue());
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+        }
     }
 
 
     public String getTagName() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getTagName();
+        try {
+            String tagName = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getTagName();
+            Logging.getLogger().debug("Got tag of element with locator: " + this.getLocator().getValue());
+            return tagName;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
 
     public String getAttribute(String name) {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getAttribute(name);
+        try {
+            String attr = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getAttribute(name);
+            Logging.getLogger().debug("Got attribute of element with locator: " + this.getLocator().getValue());
+            return attr;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
 
     public boolean isSelected() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isSelected();
+        try {
+            boolean selected = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isSelected();
+            Logging.getLogger().debug("Selected of element with locator: " + this.getLocator().getValue());
+            return selected;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return false;
+        }
     }
 
 
     public boolean isEnabled() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isEnabled();
+        try {
+            boolean enabled = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isEnabled();
+            Logging.getLogger().debug("Defined enabled/disabled state of element with locator: " + this.getLocator().getValue());
+            return enabled;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return false;
+        }
     }
 
 
     public String getText() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getText();
+        try {
+            String text = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getText();
+            Logging.getLogger().debug("Got text of element with locator: " + this.getLocator().getValue());
+            return text;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
     public boolean isDisplayed() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isDisplayed();
+        try {
+            boolean displ = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isDisplayed();
+            Logging.getLogger().debug("Defined if displayed/hidden element with locator: " + this.getLocator().getValue());
+            return displ;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return false;
+        }
     }
 
 
     public Point getLocation() {
-        return this.getLocation();
+        try {
+            Point location = this.getLocation();
+            Logging.getLogger().debug("Got location of element with locator: " + this.getLocator().getValue());
+            return location;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
 
     public Dimension getSize() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getSize();
+        try {
+            Dimension dim = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getSize();
+            Logging.getLogger().debug("Got size of element with locator: " + this.getLocator().getValue());
+            return dim;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
 
     public Rectangle getRect() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getRect();
+        try {
+            Rectangle rect = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getRect();
+            Logging.getLogger().debug("Got rect of element with locator: " + this.getLocator().getValue());
+            return rect;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
 
     public String getCssValue(String propertyName) {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getCssValue(propertyName);
+        try {
+            String css = WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getCssValue(propertyName);
+            Logging.getLogger().debug("Got CSS vale of element with locator: " + this.getLocator().getValue());
+            return css;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
 
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return this.getScreenshotAs(target);
+        try {
+            Logging.getLogger().debug("Got screenshot of element with locator: " + this.getLocator().getValue());
+            return this.getScreenshotAs(target);
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+            return null;
+        }
     }
 
 
     public void selectAutocompletedValue(String valueToSelect, String abbrValue){
-        List<WebElement> elements = WebDriverSingleton.getWebDriverInstance().findElements(this.getLocator().getBy());
+        List<WebElement> elements = WebdriverSingleton.getWebDriverInstance().findElements(this.getLocator().getBy());
         boolean found = false;
         for (int i = 0; i < elements.size(); i++) {
             elements.get(i).sendKeys(Keys.DOWN);
@@ -111,29 +223,52 @@ public class UIElement {
             }
         }
         if (found) {
+            Logging.getLogger().debug("Selecte autocomplete value of element with locator: " + this.getLocator().getValue());
             return;
         }
         else {
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
             fail("Specified value: " + valueToSelect + " was not found!");
         }
     }
 
     public void dragAndDropElement(int valueX, int valueY){
-        Actions builder = new Actions(WebDriverSingleton.getWebDriverInstance());
-        builder.dragAndDropBy(WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()), valueX, valueY).build().perform();
+        try {
+            Actions builder = new Actions(WebdriverSingleton.getWebDriverInstance());
+            builder.dragAndDropBy(WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()), valueX, valueY).build().perform();
+            Logging.getLogger().debug("Dragged and dropped element with locator: " + this.getLocator().getValue());
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+        }
     }
 
     public List<WebElement> getList(){
-        return WebDriverSingleton.getWebDriverInstance().findElements(this.getLocator().getBy());
+        try {
+            List<WebElement> list = WebdriverSingleton.getWebDriverInstance().findElements(this.getLocator().getBy());
+            Logging.getLogger().debug("Got list of elements with locator: " + this.getLocator().getValue());
+            return list;
+        }
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+        }
+        return null;
     }
 
     public int getListSize(){
-        List<WebElement> located_elements = WebDriverSingleton.getWebDriverInstance().findElements(this.getLocator().getBy());
-        int count=0;
-        for(WebElement located_element : located_elements){
-            count++;
+        try {
+            List<WebElement> located_elements = WebdriverSingleton.getWebDriverInstance().findElements(this.getLocator().getBy());
+            int count = 0;
+            for (WebElement located_element : located_elements) {
+                count++;
+            }
+            Logging.getLogger().debug("Got size of element with locator: " + this.getLocator().getValue());
+            return count;
         }
-        return count;
+        catch (Exception e){
+            Logging.getLogger().error("Element with locator: " + this.getLocator().getValue() + " not found!");
+        }
+        return 0;
     }
 
 

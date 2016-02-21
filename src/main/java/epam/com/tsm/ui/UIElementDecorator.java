@@ -1,8 +1,7 @@
 package epam.com.tsm.ui;
 
-import epam.com.tsm.webdriver.WebDriverSingleton;
+import epam.com.tsm.webdriver.WebdriverSingleton;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class UIElementDecorator implements WebElement{
 
     @Override
     public void click() {
-        WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).click();
+        WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).click();
     }
 
     @Override
@@ -36,42 +35,42 @@ public class UIElementDecorator implements WebElement{
 
     @Override
     public void sendKeys(CharSequence... keysToSend) {
-        WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).sendKeys(keysToSend);
+        WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).sendKeys(keysToSend);
     }
 
     @Override
     public void clear() {
-        WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).clear();
+        WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).clear();
     }
 
     @Override
     public String getTagName() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getTagName();
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getTagName();
     }
 
     @Override
     public String getAttribute(String name) {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getAttribute(name);
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getAttribute(name);
     }
 
     @Override
     public boolean isSelected() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isSelected();
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isSelected();
     }
 
     @Override
     public boolean isEnabled() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isEnabled();
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isEnabled();
     }
 
     @Override
     public String getText() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getText();
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getText();
     }
 
     @Override
     public List<WebElement> findElements(By by) {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).findElements(by);
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).findElements(by);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class UIElementDecorator implements WebElement{
     @Override
     public boolean isDisplayed() {
         System.out.println("This is an example of WebElement class decoration!");
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isDisplayed();
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).isDisplayed();
     }
 
     @Override
@@ -92,17 +91,17 @@ public class UIElementDecorator implements WebElement{
 
     @Override
     public Dimension getSize() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getSize();
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getSize();
     }
 
     @Override
     public Rectangle getRect() {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getRect();
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getRect();
     }
 
     @Override
     public String getCssValue(String propertyName) {
-        return WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getCssValue(propertyName);
+        return WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()).getCssValue(propertyName);
     }
 
     @Override

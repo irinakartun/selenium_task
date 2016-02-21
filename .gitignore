@@ -1,5 +1,4 @@
 /target
 /.idea
-selenium_task.iml
-/src/main/java/epam/com/tsm/webdriver/WebDriverDecorator.java
+selenium.iml
 

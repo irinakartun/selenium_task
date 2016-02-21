@@ -2,8 +2,6 @@ package epam.com.tsm.controls;
 
 import epam.com.tsm.ui.Locator;
 import epam.com.tsm.ui.UIElement;
-import epam.com.tsm.webdriver.WebDriverSingleton;
-import org.openqa.selenium.WebDriver;
 
 /**
  * Created by Irina_Kartun on 1/18/2016.

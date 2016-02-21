@@ -3,8 +3,6 @@ package epam.com.tsm.businessObjects;
 import epam.com.tsm.controls.Slider;
 import epam.com.tsm.ui.Locator;
 import epam.com.tsm.ui.LocatorType;
-import epam.com.tsm.webdriver.WebDriverSingleton;
-import org.openqa.selenium.WebDriver;
 
 
 /**

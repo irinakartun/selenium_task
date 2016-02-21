@@ -6,17 +6,20 @@ import epam.com.tsm.businessObjects.Filter;
 import epam.com.tsm.controls.Button;
 import epam.com.tsm.controls.CheckBox;
 import epam.com.tsm.controls.TextLabel;
+import epam.com.tsm.logger.Logging;
 import epam.com.tsm.ui.Locator;
 import epam.com.tsm.ui.LocatorType;
 import epam.com.tsm.ui.UIElement;
-import epam.com.tsm.webdriver.WebDriverSingleton;
+import epam.com.tsm.webdriver.WebdriverSingleton;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.fail;
+import static epam.com.tsm.webdriver.WebdriverSingleton.highlightElement;
 
 /**
  * Created by Irina_Kartun on 12/5/2015.
@@ -39,14 +42,17 @@ public class ResultPage extends AbstractPage {
 
 
     public void waitResultsUploaded(){
-        WebDriverSingleton.waitElementIsPresented(uploadedResults);
+        Logging.getLogger().info("Waiting for results..");
+        WebdriverSingleton.waitElementIsPresented(uploadedResults);
     }
 
     public String verifyHeader(){
+        Logging.getLogger().info("Get header value");
         return header.getText();
     }
 
     public void setSliderFilter(String type, int xLeft, int xRight){
+        Logging.getLogger().info("Setting Slider Filter");
         if (!costFilter.isDisplayed()){
             costTab.click();
         }
@@ -55,6 +61,7 @@ public class ResultPage extends AbstractPage {
     }
 
     public void setFilterByAirlines(String airlineName){
+        Logging.getLogger().info("Setting Airport Filter");
         if (!airlinesFilter.isDisplayed()){
             airlinesTab.click();
         }
@@ -70,6 +77,7 @@ public class ResultPage extends AbstractPage {
     }
 
     public void verifyFilterResults(String airlineName) throws ParseException {
+        Logging.getLogger().info("Verifying Filter Results");
         float lowCost = parseCurrencyToNumber(costLowValue.getText().trim());
         float highCost = parseCurrencyToNumber(costHighValue.getText().replace(" - ", "").trim());
         TextLabel prices = new TextLabel(new Locator(LocatorType.XPATH, "//*[@class='ng-scope ng-isolate-scope']//*[@class='card__price']"));

@@ -2,11 +2,12 @@ package epam.com.tsm.pom;
 
 import epam.com.tsm.businessObjects.Calendar;
 import epam.com.tsm.controls.*;
+import epam.com.tsm.logger.Logging;
 import epam.com.tsm.ui.Locator;
 import epam.com.tsm.ui.LocatorType;
 import epam.com.tsm.ui.UIElement;
 import epam.com.tsm.ui.UIElementDecorator;
-import epam.com.tsm.webdriver.WebDriverSingleton;
+import epam.com.tsm.webdriver.WebdriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -47,36 +48,43 @@ public class SuperHomePage extends AbstractPage{
 
 
     public void openFlightsTab(){
+        Logging.getLogger().info("Open flights tab");
         flightsTab.clickButton();
     }
 
     public void setDepartAirport(String airportFrom, String abbrFrom){
+        Logging.getLogger().info("Setting Depart Airport");
         flyingFrom.setTextValue(airportFrom);
-        WebDriverSingleton.waitElementIsPresented(autocompleteFrom);
+        WebdriverSingleton.waitElementIsPresented(autocompleteFrom);
         airportsFrom.selectAutocompleteValue(airportFrom, abbrFrom);
     }
 
     public void setDestinationAirport(String airportTo, String abbrTo){
+        Logging.getLogger().info("Setting Destination Airport");
         flyingTo.setTextValue(airportTo);
-        WebDriverSingleton.waitElementIsPresented(autocompleteTo);
+        WebdriverSingleton.waitElementIsPresented(autocompleteTo);
         airportsTo.selectAutocompleteValue(airportTo, abbrTo);
     }
 
     public void setDepartDate(String departDate){
+        Logging.getLogger().info("Setting Depart Date");
         Calendar calendarFrom = new Calendar(departCalendar);
         calendarFrom.selectDate(departDate, "departure");
     }
 
     public void setReturnDate(String returnDate){
+        Logging.getLogger().info("Setting Return Date");
         Calendar calendarTo = new Calendar(returnCalendar);
         calendarTo.selectDate(returnDate, "return");
     }
 
     public void setAdultsAmount(String adultsAmount){
+        Logging.getLogger().info("Setting Adults number");
         adults.selectValue(adultsAmount);
     }
 
     public ResultPage clickSearchButton(){
+        Logging.getLogger().info("Click on Search Button");
         searchBtn.clickButton();
         return PageFactory.initElements(driver, ResultPage.class);
     }

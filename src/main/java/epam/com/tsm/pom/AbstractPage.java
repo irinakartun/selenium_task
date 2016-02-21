@@ -1,5 +1,6 @@
 package epam.com.tsm.pom;
 
+import epam.com.tsm.ui.UIElement;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -28,8 +29,6 @@ public class AbstractPage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript(script);
     }
-
-
 
 
 }

@@ -2,9 +2,7 @@ package epam.com.tsm.controls;
 
 import epam.com.tsm.ui.Locator;
 import epam.com.tsm.ui.UIElement;
-import epam.com.tsm.webdriver.WebDriverSingleton;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import epam.com.tsm.webdriver.WebdriverSingleton;
 import org.openqa.selenium.support.ui.Select;
 
 /**
@@ -17,7 +15,7 @@ public class DropdownList extends UIElement{
     }
 
     public void selectValue(String valueToSelect){
-        Select selectElement = new Select(WebDriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()));
+        Select selectElement = new Select(WebdriverSingleton.getWebDriverInstance().findElement(this.getLocator().getBy()));
         selectElement.selectByVisibleText(valueToSelect);
     }
 

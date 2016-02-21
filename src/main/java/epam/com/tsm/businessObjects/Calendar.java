@@ -1,15 +1,10 @@
 package epam.com.tsm.businessObjects;
 
-import com.thoughtworks.selenium.SeleneseTestBase;
 import epam.com.tsm.controls.Button;
 import epam.com.tsm.controls.EditBox;
 import epam.com.tsm.ui.Locator;
 import epam.com.tsm.ui.LocatorType;
 import epam.com.tsm.ui.UIElement;
-import epam.com.tsm.webdriver.WebDriverSingleton;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.fail;
 
